@@ -2,7 +2,7 @@
 CREATE DATABASE Assignment2 DEFAULT CHARACTER SET = 'utf8mb4';
 SHOW DATABASES;
 use Assignment2;
-
+-- create a table with the given fields and eployee_id as primary key.
 CREATE Table employee_details_table(
 employee_id VARCHAR(50) NOT NULL,
 employee_first_name VARCHAR(150),
@@ -14,6 +14,7 @@ PRIMARY KEY(employee_id)
 insert INTO employee_details_table(employee_id,employee_first_name,employee_last_name,Graduation_percentile)
 VALUES('RU122','Jhon','Snow',60);
 
+-- create a table with the given fields and employee_id as primary key.
 CREATE Table employee_salary_table(
 employee_id VARCHAR(50) NOT NULL,
 employee_salary int,
@@ -24,6 +25,7 @@ PRIMARY KEY(employee_id)
 insert INTO employee_salary_table(employee_id,employee_salary,employee_code)
 VALUES('RU125',85000,'su_tyrion');
 
+-- create a table with the given fields and employee_code as primary key.
 CREATE Table employee_code_table(
 employee_code VARCHAR(150) NOT NULL,
 employee_code_name VARCHAR(150),
@@ -31,34 +33,34 @@ employee_domain VARCHAR(150),
 PRIMARY KEY(employee_code)
 );
 
--- question1
+-- question1- list all employee first name with salary greater than 50k.
 Select employee_first_name from employee_details_table
 inner join employee_salary_table on employee_details_table.employee_id=employee_salary_table.employee_id 
 WHERE employee_salary_table.employee_salary > 60000;
 
--- question2
+-- question 2- list all employee last name with graduation percentile greater than 70%.
 SELECT employee_last_name FROM employee_details_table where Graduation_percentile > 70;
 
--- question 3
+-- question 3- list all employee code name with graduation percentile less than 70%.
 SELECT employee_code_name FROM employee_code_table INNER JOIN employee_salary_table ON employee_code_table.employee_code=
 employee_salary_table.employee_code
 INNER JOIN employee_details_table on employee_salary_table.employee_id = 
 employee_details_table.employee_id WHERE employee_details_table.Graduation_percentile > 70;
 
--- question 4
+-- question 4- list all employee’s full name that are not of domain Java.
 SELECT employee_first_name, employee_last_name from employee_details_table
 inner join employee_salary_table on employee_salary_table.employee_id=employee_details_table.employee_id
 inner join employee_code_table on employee_code_table.employee_code=employee_salary_table.employee_code 
 where employee_code_table.employee_domain !='Java';
 
--- question 5
+-- question 5- list all employee_domain with sum of it's salary.
 select DISTINCT sum(employee_salary_table.employee_salary) as salary, employee_code_table.employee_domain from employee_salary_table
 inner join employee_code_table on employee_code_table.employee_code = employee_salary_table.employee_code GROUP BY employee_code_table.employee_domain;
 
--- question 6
+-- question 6- same query as question 5 but do not include salaries which is less than 30k.
 select DISTINCT sum(employee_salary_table.employee_salary) as salary_above_30k, employee_code_table.employee_domain from employee_salary_table
 inner join employee_code_table on employee_code_table.employee_code = employee_salary_table.employee_code where employee_salary_table.employee_salary > 30000 GROUP BY employee_code_table.employee_domain;
 
--- question 7
+-- question 7- list all employee id which has not been assigned employee code.
 SELECT employee_details_table.employee_id FROM employee_details_table inner join
 employee_salary_table on employee_salary_table.employee_id = employee_details_table.employee_id WHERE employee_salary_table.employee_code IS NOT NULL;
