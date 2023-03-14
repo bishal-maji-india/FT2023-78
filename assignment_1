@@ -1,0 +1,33 @@
+
+CREATE DATABASE IplFixture;
+SHOW DATABASES;
+USE IplFixture;
+
+-- create a table with the given fields and match_id as primary key.
+CREATE TABLE Ipl_match_list(
+  Match_id int NOT NULL,
+  Venue_match VARCHAR(300),
+  Date_match  VARCHAR(300),
+  Team_1_name VARCHAR(100),
+  Team_2_name VARCHAR(100),
+  Captain_team_1 VARCHAR(100),
+  Captain_team_2 VARCHAR(100),
+  PRIMARY KEY(Match_id)
+);
+
+
+INSERT INTO Ipl_match_list(Match_id,Venue_match,Date_match,Team_1_name,Team_2_name,Captain_team_1,Captain_team_2)
+VALUES(1,'kolkata','12-03-2023','India','Pakisthan','Virat','Babar');
+
+INSERT INTO Ipl_match_result(Match_id_result,Toss_won_by,Match_won_by)
+VALUES(1,'Pakisthan','India');
+
+-- create a table with the given fields and match_id_result zas primary key and match_id as foreign key
+CREATE TABLE Ipl_match_result(
+  Match_id_result INT NOT NULL,
+  Toss_won_by VARCHAR(100),
+  Match_won_by VARCHAR(100),
+  Match_id int,
+  PRIMARY KEY(Match_id_result),
+  FOREIGN KEY (Match_id) REFERENCES Ipl_match_list(Match_id)
+);
