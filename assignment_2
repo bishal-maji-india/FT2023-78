@@ -2,6 +2,8 @@
 CREATE DATABASE Assignment2 DEFAULT CHARACTER SET = 'utf8mb4';
 SHOW DATABASES;
 use Assignment2;
+
+
 -- create a table with the given fields and eployee_id as primary key.
 CREATE Table employee_details_table(
 employee_id VARCHAR(50) NOT NULL,
